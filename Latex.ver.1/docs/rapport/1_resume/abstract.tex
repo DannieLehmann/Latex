@@ -1,0 +1,11 @@
+In the semester project we sought to develop a hatching machine, initially with the hatching of chicken eggs in focus.
+
+During the start of the project, there were used various UML and SysML tools to provide an overview of the project. During this period the develop metode, V - model  was used. In the project's design and implementation phase it was attempted to apply the working method Scrum.
+
+The project involves two systems, one of them, a microcontroller of the type PSoC3, the other an embedded system, DevKit8000. Part of the project, was to make the two systems communicate via SPI.
+
+For PSoC3 the primary focus was on applying different types of I2C sensors, control loops as well as controlling DC- and stepper motors. These components have been worked with both hardware of software wise. The software written to PSoC3, was written in the programming language C, and the program PSoC Creator was used.
+
+The embedded system, DevKit8000, was set up with a Linux based operating system. For the DevKit8000 a driver was made, in the form of a Linux kernel module, which had to deal with the SPI communication to PSoC3 and an interrupt line. In addition, a GUI application was developed, which used the aforementioned driver to show/send data from/to the PSoC3. The application is written in C++, using the Qt framework.
+
+The project involved regulation of temperature and humidity. For regulation of the temperature, a PWM controlled heater was used, and for regulation of the humidity, an atmomizer controlled by a solenoid valve was used.

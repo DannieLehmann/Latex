@@ -1,0 +1,20 @@
+\section{Specifikation og analyse}
+%Beskrivelse af specifikations- og analysearbejdet. Dvs. de overvejelser man
+%har gjort – de løsninger man har valgt og begrundelsen herfor. En domæne
+%model vil være relevant at tilføje i dette afsnit.
+
+Under undersøgelse omkring hvad et godt udrugningsmiljø\footnote{Hønsehuset.dk \cite{Rugetips}} er, stod det klart at den korrekte temperatur og luftfugtighed var et kritisk element i systemet. Disse oplysninger afkaster det ret skrappe krav om at systemet skulle være i stand til at holde temperaturen på  $\pm$ 1$^\circ$C, samt luftfugtigheden på $\pm$ 10 procentpoint.
+
+Der findes mange forskellige holdninger til hvordan æggene roteres bedst. Nogen mener at æggene skal roteres den samme vej og andre at æggene skal roteres skiftevis med og mod uret. Disse oplysninger førte til kravet om at ægget skal roteres begge veje.   
+
+Endvidere blev det beslutte at:
+
+\begin{itemize}
+\item DevKit8000 skulle fungere som brugerens indgang til styring af systemet. En grafisk brugergrænseflade skulle udvikles til og afvikles på denne.
+\item PSoC3 skulle fungere som den regulerende del af systemet. Den skulle fungere uafhængigt af DevKit8000 når udrugningsprocessen er i gang.
+\item Der skulle være en klar skilleline mellem DevKit8000 og resten af systemet. Da DevKit8000 er en ret dyr del af systemet, og i forbindelse med evt. masseproduktion er det en del, der gerne måtte erstattes af en billigere komponent.
+\item Der skal benyttes digitale sensorer til måling af temperatur og luftfugtighed. Færdig-kalibrerede, digitale sensor fjerner nødvendigheden af at der skal fortages besværlige og tidskrævende kalibreringer af sensorer. Samtidigt er miljøet der skal måles på, velegnet til denne type sensorer. Ydermere vil et valg af bestemte typer gøre udviklingen hurtigere, da udviklingsmiljøet for PSoC3 har indbygget standard-metoder til at håndtere disse.
+\item PSoC3 og DevKit8000 skal kommunikere med hinanden gennem SPI, da der er erfaring med a koble disse to enheder sammen gennem dette interface.
+\item Sensorerne skal være af typen I2C, da der ligeledes er erfaring med at benytte dette interface, og dette interface understøttes direkte af udviklingsmiljøet for PSoC3.
+\item Opvarmningen af udrugningsmiljøet skal foretages med et varmelegeme, dette er for at få en ligelig fordeling af varmen når der er påkoblet en blæser. Varmelegemet er også nemt til brug af PWM-styring, da det kan styres med et simpelt mosfetkredsløb.
+\end{itemize}

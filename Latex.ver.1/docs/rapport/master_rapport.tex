@@ -1,0 +1,41 @@
+\documentclass[a4paper,11pt,fleqn,dvipsnames,oneside,openright]{memoir} 	%
+% Openright aabner kapitler paa hoejresider (openany begge)
+%\newcommand*{\docroot}{.}%Sætter relativ rod af dokumentet
+\input{../import/packages}
+\input{../import/modifications}
+
+\title{Projektrapport}
+\author{E3PRJ3 Gruppe 08}
+\date{\today{} \currenttime{}}
+
+\begin{document}
+% % % Indexes % % %
+%\maketitle
+
+\frontmatter
+\input{0_forside/forside}
+%\clearpage
+%\input{../references/deltageres_underskrift}
+\clearpage
+\input{../references/deltageres_underskrift}
+\input{1_resume/resume}
+
+%indholdsfortegnelse
+\clearpage
+\tableofcontents*
+
+\mainmatter
+\input{2_indledning/indledning}
+
+\input{3_opgaveformulering/opgaveformulering}
+\input{4_projektafgraensning/projektafgraensning}
+\input{5_systembeskrivelse/systembeskrivelse}
+\input{6_krav/krav}
+\input{7_projektbeskrivelse/projektbeskrivelse}
+\input{8_konklusion/konklusion}
+\input{9_referencer/referencer}
+
+%Generer en liste over opgaver der mangler at blive udført
+\listoffixmes
+
+\end{document}

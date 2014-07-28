@@ -1,0 +1,26 @@
+\subsection{Lågekontakt - Jens}
+\subsubsection{Design}
+
+For at muliggøre registreringen af lågens status er det nødvendig med den form for kontakt, som har følgende egenskaber: Et GPIO i form af 5VDC, samt have den fysiske udførelse der muliggør overvågning af ledningsbrud.
+
+Lågekontaktens signal skal både forbindes til PSoC og DevKit8000, da begge enheder har brug for at kende lågens status.
+
+Dette kan udføres på flere måder, bl.a.
+\begin{itemize}
+ \item To separate kontakter. En til PSoC3 samt en til DevKit.
+ \item En kontakt med et signal til PSoC3, samt et signal til DevKit.
+ \item En kontakt med signalet til PSoC3 og herfra videre route signalet til DevKit8000.
+\end{itemize}
+
+Løsningen der blev valgt var: \textit{En kontakt med signalet til PSoC3 og herfra videre route signalet til DevKit8000.} 
+Dette valg blev fortaget hovedsageligt pga. at det er muligt at fjerne prel fra signalet på PSoC3, således at ekstra hardware komponenter kan udgås.  
+
+\subsubsection{Implementation}
+
+Kontaktprellet bliver fjernet via en debouncer, som er en standard komponent i PSoC3 creator. 
+
+Det er valgt at køre med en relativ lav clock på 10Hz til debouncerne, da det er begrænset hvor hurtigt det er nødvendig at registrere skift i lågens status. 
+
+q udgangen på debounce filteret er ført videre til DevKit8000. Denne udgang er filtreret for kontakt prel. 
+
+Der bliver kaldt en ISR på både den positive og negative flanke, denne ISR toggeler et flag som bliver brugt i "Main" til at overvåge lågens status. 

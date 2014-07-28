@@ -1,0 +1,44 @@
+\subsection{Sensor - Dannie} \label{Sensor}
+
+\subsubsection{Design}
+
+Til udrugningen skal luftfugtigheden og temperaturen holdes på et fast niveau. 
+Ved lidt hurtigt søgning i lokal varekakaori, er der fundet en sensor som kunne måle begge dele. Sensoren har dog en kompliceret protokol. Efter noget research og forsøg med at få lavet et program, viser det sig dog, at for at få sensoren til at virke, vil det kræve en ekstra microprocessor kun til at arbejde med sensoren. Derfor vælges sensoren HIH6121-021, som har samme nødvendige funktionalitet som sensoren SHT71 dog knapt så fintfølende. Sensoren overholder stadigvæk kravspecifikationerne og kommunikerer med en standard I2C protokol, hvilket vil være forholdsvist nemt at implementere. HIH6121-021 sensoren har et spændingsniveau mellem \SI{2.3}{\volt} og \SI{5.5}{\volt}\cite{HIH61xx}, da PSoC3 spændingsniveau ligger på \SI{3.3}{\volt} eller \SI{5}{\volt} vil det ikke være et problem uanset PSoC3 spændingsniveau. Da sensoren følger en I2C protokol\cite{HIH61xx_I2C}, skal der ikke tages hensyn til støj.
+
+\subsubsection{Implementering}
+
+Der er implementeret 5 funktioner til HIH6121-021 softwaren:
+\begin{enumerate}
+\item \texttt{init\_HIH61xx()} har til formål at implementere I2C standardkomponentens kode i PSoC3 programmet. 
+
+\item \texttt{measure\_HIH61xx()} har til formål at kommunikere med sensoren. Den får sensoren til at måle luftfugtighed og temperatur.
+
+\item \texttt{read\_HIH61xx()} har til formål at aflæse de målte værdier fra sensoren. Den aflæser 4 data bytes, som funktionen allokerer og behandler lokalt. 
+
+\item \texttt{getTemp()} har til formål at returnere den sidste aflæste temperaturværdi fra sensoren. 
+
+\item \texttt{getHumid()} har til formål at returnere den sidste aflæste luftfugtighedsværdi fra sensoren.
+\end{enumerate}
+
+Funktionerne er delt op, således at hver enkelt modul som skal bruge data fra sensoren, ikke skal kommunikere hver gang de skal bruge data, de kan simpelt kalde \texttt{getTemp()} eller \texttt{getHumid()} og derved få de sidste opdaterede værdier. \texttt{measure\_HIH61xx} og \texttt{read\_HIH61xx} er lavet således at de kan blive kaldt når main programmet har tid til at opdatere værdierne af luftfugtighed og temperatur, så er det op til main programmet at bestemme hvor ofte værdierne skal opdateres. 
+
+%
+%\subsubsection{Design}
+%Processen at udruge et æg tager op til flere uger, og det er vigtigt at kunne holde styr på de forskellige faser i udrugningen. Derfor er der brug for en timer, som over lang tid kan holde styr på tiden.
+%
+%Umiddelbart har vi tre muligheder på PSoC3-platformen, som opfylder ovenstående ønsker:
+%
+%1) En timer som periodisk genererer et interrupt, som kan bruges til at optælle en variabel.
+%
+%2) En count-down timer som udfører en handling, når timeren har talt ned. Timeren indstilles herefter til tiden indtil den næste handling skal udføres.
+%
+%3) En Real-Time Clock (RTC), hvor en alarm kan sættes til det næste tidspunkt hvorpå der skal ske en handling.
+%
+%Mulighed nr. 1 har fordelen at vi hele tiden har en variabel, som beskriver hvor lang tid der er gået - denne information kan bruges, når brugeren skal informeres om tiden.
+%
+%\subsubsection{Implementering}
+%Implementeringen af timeren foregår i PSoC Creator, hvor der vælges en timerkomponent, en clock og en ISR (Interrupt Service Rutine). Clocken sættes til timerens clock-indgang, og ligeledes sættes ISR-komponenten til timerens interrupt-udgang.
+%
+%Timer og clock indstilles så interruptet fremkommer hvert minut.
+%
+%I softwaren, i ISR-funktionen, sættes et flag til "true" hver gang timeren genererer et interrupt. Dette flag tjekkes i main-løkken, hvorefter minuttælleren forøges med 1. 

@@ -1,0 +1,48 @@
+\subsection{Begynd udrugning}
+
+\begin{table}[H]
+\centering
+\begin{tabular}[\textwidth]{|p{0.18\textwidth}|p{0.82\textwidth}|}
+\hline Navn & Begynd udrugning \\ 
+\hline Usecase ID & \usecaseset{Begynd udrugning} \\ 
+\hline Scope &  \\
+\hline Primær aktør & Bruger \\ 
+\hline Interessenter & Tekniske ansvarlig. \\ 
+\hline Forudsætning & Use Case \usecaseref{Udrug aeg} er ikke aktiv \\ 
+\hline Resultat & Udrugning af indlagte æg er påbegyndt. \\ 
+\hline Hovedforløb &
+	\begin{enumerate}
+	\item \label{itm:Begynd-step1} Bruger åbner låge.
+	\item \label{itm:Begynd-step2} Systemet registrerer åbning af låge. 
+	\item \label{itm:Begynd-step3} Systemet låser for interfacet (skriver "låge åben").
+	\item \label{itm:Begynd-step4} Bruger placerer æg i maskine.
+	\item \label{itm:Begynd-step5} Bruger lukker låge.
+	\item \label{itm:Begynd-step6} Systemet registrerer lukning af låge.  
+	\item \label{itm:Begynd-step7} Systemet låser op for interfacet (fjerner "låge åben").
+	\item \label{itm:Begynd-step8} Bruger vælger type af æg til udrugning (sekvens).
+	\item \label{itm:Begynd-step9} Systemet spørger bruger om bekræftelse.
+	\item \label{itm:Begynd-step10} Bruger bekræfter valg (vælger "OK").
+	\item \label{itm:Begynd-step11} Systemet registrerer valg.
+	\item \label{itm:Begynd-step12} Systemet aktiverer sekvensen Udrug Æg (Use Case \usecaseref{Udrug aeg}).
+%	\item \label{itm:Begynd-step12} 
+	\end{enumerate} \\
+	\hline Undtagelser &
+	\begin{enumerate}
+	\item[\ref{itm:Begynd-step2}a.] System registrerer ikke åbning af låge. 
+	\begin{itemize}
+	\item Bruger kontakter teknisk ansvarlig. 
+	\end{itemize}
+	\item[\ref{itm:Begynd-step6}a.] System registrerer ikke lukning af låge.  
+	\begin{itemize}
+	\item Bruger kontakter teknisk ansvarlig. 
+	\end{itemize}
+	\item[\ref{itm:Begynd-step10}a.] Bruger bekræfter ikke valg (vælger "Annullér"). 
+	\begin{itemize}
+	\item Step \ref{itm:Begynd-step8} gentages.
+	\end{itemize}
+	\end{enumerate} \\
+\hline 
+\end{tabular}
+\caption{Use Case - Begynd udrugning}
+\label{tab:usecase-Begynd-udrugning}
+\end{table}

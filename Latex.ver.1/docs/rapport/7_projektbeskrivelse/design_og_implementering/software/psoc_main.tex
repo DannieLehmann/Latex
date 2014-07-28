@@ -1,0 +1,50 @@
+\newpage
+\subsection{PSoC main - Simon og Stine}
+
+\subsubsection{Design}
+
+For at forenkle implementeringen af udrugningssekvenser er det blevet besluttet
+at starte med kun at implementere forløbet for en enkel ægtype. 
+Følgende forløb ønskes:
+
+\begin{itemize}
+  \item Tiden nulstilles når udrugningssekvensen påbegyndes.
+  \item Temperaturen sættes til 37 grader og luftfugtigheden sættes til 45.
+  \item Hver 12. time skal æggene vendes.
+  \item Hvert døgn skal det simuleres at hønen forlader æggene i 30 minutter. Dette gøres ved at sætte temperaturen ned til 20 i 30 minutter.
+  \item Efter 18 dage skal luftfugtigheden sættes op til 75.
+  \item Efter 21 dage er udrugningssekvensen slut. Timeren skal stoppes og DevKit8000 informeres.
+\end{itemize}
+Forløbet for udrugningssekvensen er inspireret fra hjemmesiden\footnote{Hønsehuset.dk \cite{Rugetips}}.
+
+Forløbet ønskes implementeret som en for-løkke, der bliver kørt igennem en gang i minuttet.
+Der skal tages hensyn til de tidsbegænsninger der er i udrugningssekvensen, f.eks. 12 timer og 18 dage.
+For at håndtere dette, vælges det at omregne tiden til minutter, hvorefter man vha. if-sætninger, kan håndtere begrænsningerne.
+
+Tidsbegrænsningerne omregnet til minutter:
+\begin{itemize}
+  \item 12 timer = 720 minutter.
+  \item 24 timer = 1440 minutter.
+  \item 18 dage = 25920 minutter.
+  \item 21 dage = 30240 minutter.
+\end{itemize}
+
+
+\subsubsection{Implementering}
+Implementeringen af forløbet for udrugningen blev lavet i et PSoC projekt.
+
+Operatoren modulus blev valgt til at hjælpe med at implementere de tidsbegrænsede dele af forløbet.
+En variabel countInMinutes blev oprettet til at indeholde tiden gået siden start.
+Da countInMinutes indeholder tiden der er gået, kan modulus bruges til at overholde tidsbegrænsningerne.
+Eksempel på brug af modulus: 
+
+\texttt{if(countInMinutes \% 720 == 0)}
+
+Denne if-sætning checker på, om det er tid til æggevending, hvilket er hvert 720. minut.
+
+For hver af punkterne i forløbet (se design afsnit) blev der oprettet en if-sætning, magen til den ovenfor.
+Ud over if-sætningerne for 12 timer, 24 timer, 18 dage og 21 dage skulle der oprettes en if-sætning til at håndtere simuleringen 
+af at hønen forlader reden. 
+Hver 24 time bliver temperaturen sat til en lavere temperatur og den samtidige tid, countInMinutes, bliver gemt i en variabel timeStamp.
+Derudover bliver et flag sat.
+Dette flag samt timeStamp benyttes i en if-sætning der sørger for at temperaturen kun er sænket i 30 minutter. 

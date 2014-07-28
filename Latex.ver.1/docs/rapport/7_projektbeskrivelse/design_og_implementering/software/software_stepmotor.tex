@@ -1,0 +1,19 @@
+\newpage
+\subsection{Æggevending - Andreas}
+Hele æggevendemekanismen indeholder 3 dele, disse er en fysisk stepmotor, en mekanisk vendeopsætning, samt en software styring af stepmotoren.
+Den fysiske stepmotor er valgt som en unipolær, gearet stepmotor\footnote{Se datablad \cite{Stepmotor}}. Den mekaniske del er ikke implementeret, men der er foretaget designovervejelser over denne del, og software styringen er beskrevet i den følgende del af rapporten.
+
+\subsubsection{Design}
+Til stepmotorstyringen er der overvejet at lave med hensyn til stepping metode. De relevante metoder til dette projekt er enkelt faset full stepping, dobbelt faset full stepping, eller half stepping. Da kravene til motorens præcision er meget lave, så er half stepping, som har en højere opløsning, hurtigt sorteret fra. Valget der nu skal tages er mellem større moment eller lavere strømforbrug med evne til hurtigere hastighed. Her er der som udgangspunkt valgt at tage 2 faset stepping som har det højere moment.
+
+Efter stepping metoden er på plads, så skal udførelsen af tidsintervallerne mellem hvert step overvejes. Her blev det bestemt at styringen ikke skulle være tidskritisk, og derfor blev denne lavet med et interrupt og en timer.
+
+Æggene skal efter anbefalinger roteres en halv omgang ad gangen, og der skal ikke foretages hele omdrejninger, derfor skal der mellem hver halv-rotation ændres retning af motoren.
+
+\subsubsection{Implementering}
+Stepmotorstyringen blev som udgangspunkt designet og testet med den to-faset full step styring som var planlagt, men grundet en fejl der opstod i en afsluttende test, så blev en tidlig version som var lavet med enkelt faset full stepping brugt i stedet.
+Antal steps der skulle tages for at en halv rotation af motoren endte op på 1024 stk.
+
+Tidsintervallerne der blev testet med stepmotorstyringen blev sat til 1, 2 og 5ms, der opstod fejl ved 1ms intervallerne, mens der ingen var ved 2 og 5ms. Den senere test der lavede fejl opstod ved 2ms interval og der blev forhøjet til 2.73ms som var den umiddelbare maximum interval på den allerede indførte 16bit timer, dette var dog ikke nok, og en enkelt faset full step styring blev genbrugt.
+
+Efter revideringen af motorstyringen opstod der ingen problemer og denne kunne også implementeres under den samlede integrationstest. Der er ikke taget hensyn til en evt. gearing af den mekaniske del af æggevendingen.

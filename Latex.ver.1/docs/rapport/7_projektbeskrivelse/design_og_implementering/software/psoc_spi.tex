@@ -1,0 +1,80 @@
+
+\newpage
+\subsection{PSoC SPI - Simon og Stine}\label{psoc_spi}
+
+\subsubsection{Design}
+Der ønskes en kommunikation imellem PSoC3 og DevKit8000. Denne kommunikation skal foregå over SPI.
+Formålet med kommunikationen er, at brugeren af rugemaskinen skal kunne bruge en brugergrænseflade på DevKittet til at kommunikere med PSoC3. Brugeren skal kunne starte og stoppe udrugningen samt kunne se en status af temperatur, luftfugtighed og tid på skærmen.
+
+DevKittet kan sende følgende beskeder til PSoC3:
+\begin{itemize}
+  \item En start kommando - Starter udrugningssekvensen. Starter timer, sætter temperatur og luftfugtighed. 
+  \item En slut kommando - Stopper udrugningssekvensen. Stopper timer, temperatur og luftfugtighed.
+  \item En status kommando for temperatur - Send status på temperatur.
+  \item En status kommando for luftfugtighed - Send status på luftfugtighed.
+  \item En status kommando for tid - Send den forløbne tid.
+\end{itemize}
+
+En protokol for SPI bliver udarbejdet for at sikre, at DevKit8000 og PSoC3 sender og modtager det samme.
+Det besluttes, at der sendes 16 bit ad gangen. Af disse 16 bit er de 4 første reserveret til adressen, de næste 4 til kommandoen og de sidste 8 til data.
+Start/Slut beskeden får samme adresse, men hver sin kommando.
+Status beskederne for temp, luftfugtighed og tid får hver sin adresse, men samme kommando.
+Adresserne og kommandoerne er blevet valgt som følgende:
+
+Adresser er markeret med \textcolor{red}{rød} og kommandoer er markeret med \textcolor{green}{grøn}.
+
+\begin{table}[H]
+    \begin{tabular}{|c|c|c|}
+        \hline
+        \textbf{Beskrivelse}&\textbf{Bitmønster}\\\hline
+        Start og Slut&\textcolor{red}{0001}|\textcolor{green}{0001} og \textcolor{green}{0010}\\\hline
+        Temperatur&\textcolor{red}{0010}|\textcolor{green}{0011}\\\hline
+        Luftfugtighed&\textcolor{red}{0011}|\textcolor{green}{0011}\\\hline
+        Tid&\textcolor{red}{0100}|\textcolor{green}{0011}\\\hline
+    \end{tabular}
+    \caption[Tabel]{Adresse og kommando bitmønster\hfill \textcolor{white}{.}}
+    \label{tab:addrcmd}
+\end{table}
+
+\subsubsection{Implementering}
+
+SPI kommunikationen blev implementeret i en interrupt service rutine, der står for dekodningen af data fra SPI.
+Implementeringen betod i at oprette en switch case, der skifter på adressen sendt fra DevKit8000.
+Inde i switch case'en blev der også tilføjet en if-sætning for at kunne skifte imellem Start kommandoen og Slut kommandoen, idet disse deler adresse.
+\clearpage
+Hvis kommandoen \textcolor{green}{Start} registreres skal der ske følgende:
+\begin{itemize}
+  \item Sæt temperatur til den ønskede temperatur på 37 grader.
+  \item Sæt luftfugtighed til den ønskede luftfugtighed på 45.
+  \item Nulstil tiden, countInMinutes.
+  \item Start timeren.
+\end{itemize}
+
+Hvis \textcolor{green}{Slut} kommandoen derimod registeres skal følgende ske:
+\begin{itemize}
+  \item Stop regulering af temperatur.
+  \item Stop regulering af luftfugtighed.
+  \item Stop timeren.
+\end{itemize}
+
+Implementeringen af status på temperatur, luftfugtighed og tid er ens, men varierer
+i form af det der bliver sendt tilbage til DevKit8000. 
+For at sende data til Devkittet skal der sendes en SPI besked. Denne besked indeholder data, indsamlet fra sensoren. 
+
+Implementeringen for afsendelsen af data ses nedenfor, hvor der bliver sendt en temperatur.
+\begin{lstlisting}
+/*Switch case (addr)*/
+/*Send status case in switch case*/
+case 0x2: //status temperature
+			if (cmd == 0x3) //command status
+            {   
+                //clear buffer before sending
+                SPIS_1_ClearTxBuffer(); 
+                //send data temp from sensor to devkit
+                SPIS_1_WriteTxData(getTemp());
+            }
+			break;
+\end{lstlisting}
+
+Som det ses på koden er det adressen 0x2 der svarer til temperatur. Herefter skal kommandoen checkes. Kommandoen for 'Status' er 0x3, som nævnt i design afsnittet.
+For at sende temperatur data'en benyttes SPI-kommandoen for at skrive data. Parameteren der skal sendes er i dette tilfælde, \texttt{getTemp()}. Denne parameter stammer fra sensoren, og indeholder den temperatur, der skal vises på DevKittet.

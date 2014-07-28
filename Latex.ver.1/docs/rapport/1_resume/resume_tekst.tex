@@ -1,0 +1,14 @@
+Der er i forbindelse med semester projektet forsøgt at realisere en rugemaskine, i første omgang med udrugning af hønseæg i fokus. 
+
+I projektets startforløb, er der anvendt forskellige UML og SysML værktøjer til at give overblik over projektet, og der er i denne periode anvendt en form for V-model som arbejdsmetode. I projektes design og implementerings fase er der forsøgt at anvende arbejdsmetoden Scrum.
+
+Der er i projektet blevet anvendt to systemer, den ene, en microcontroller af typen PSoC3, og den anden, et embedded system, DevKit8000. De to systemer har i projektet skulle kommunikere med hinanden via SPI.
+
+Til PSoC3 er der primært fokuseret på at anvende forskellige I2C sensorer, reguleringssløjfer samt kontrollere DC- og step-motorer. Disse forskellige komponenter er der blevet arbejdet med, både hardware of software mæssigt. Softwaren der er skrevet til PSoC3, er skevet i programmerings sproget C, og der er anvendt programmet PSoC Creator.
+
+Det embeddede system, DevKit8000 et sat op med et Linux baseret operativ system. Til DevKit8000 er der udarbejdet en driver, i form af et Linux kerne modul, til at håndtere SPI kommunikationen til PSoC3, samt en interruptlinie. Derudover er der blevet lavet en GUI applikation, som har skulle benytte den førnævnte driver til at vise/sende data fra/til PSoC3. Applikationen er skrevet i C++ og anvender Qt frameworket.
+
+Projektet involverede regulering af temperatur og luftfugtighed. Til regulering af temperatur er anvendt et PWM styret varmelegeme, og til luftfugtighedsregulering anvendes en forstøver styret af en magnetventil. 
+
+
+

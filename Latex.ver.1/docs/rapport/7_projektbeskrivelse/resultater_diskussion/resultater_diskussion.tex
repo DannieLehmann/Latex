@@ -1,0 +1,17 @@
+\section{Resultater og diskussion}
+
+Der er i dette projektforløb ikke opnået den ønskede fælles funktionalitet af en rugemaskine. Der opstod mange fejl i løbet af integrationstestene der blev foretaget. De største problemer opstod mens både DevKit8000 og sensoren var tilsluttet. Dette er i gruppen analyseret til at være et problem med 2 forskellige typer af protokoller på PSoC3, SPI til devkit og I2C til sensoren.
+
+Problemet med 2 protokoller på samme platform tænkes at skyldes et timingproblem da begge styres med interrupts, og ikke er implementeret som tidskritiske elementer.
+
+Der blev opnået en delvis funktionalitet med kommunikationen mellem DevKit8000 og PSoC3, så processen kunne initieres og stepmotoren kunne lave sin rotation på det ønskede tidspunkt. 
+
+Varmelegemet og befugteren kunne kun begrænset testes da reguleringen er en stor del af opfyldelsen for kravspecifikationen af disse dele. Der er kun lavet enhedstests på reguleringen, da der ikke var en aktuel temperatur som den kunne indregulere sig selv efter.
+Sensoren havde kun den ønskede funktionalitet hvis denne blev testet som en separat enhed.
+Der mangler i projektet også den mekaniske del til æggevending.
+%Beskrivelse af projektets resultater i kort form bl.a. ved anvendelse af tabeller,
+%grafer eller billeder. Det er vigtigt, at man her klart og nøgternt præsenterer sine
+%resultater. Det er vigtigt at udpege og diskutere relevante dele af de opnåede
+%resultaterne og deres betydning. Bl.a. en samlet vurdering af resultaterne i lyset
+%af problemstillingen og formålet med – eller hypotesen for projektet. Der må
+%også gerne være en beskrivelse af de dele af projekt man er specielt stolt af.

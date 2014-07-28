@@ -1,0 +1,7 @@
+\subsection{Simon}
+
+Rugemaskinens sekvensrutine blev successfuldt implementeret og testet for hønseæg, således at de tidsbestemte handlinger for denne type æg udføres rettidig. F.eks. at rotere æggene hver tolvte time, og udlufte æggene en gang i døgnet.
+
+Der blev udfærdiget en datakommunikations-protokol til SPI-kommunikationen mellem DevKit8000 og PSoC3. Denne blev implementeret og testet, således at brugeren via touch-interface på DevKit8000 kan styre samt kontrollere udrugningsprogrammet på PSoC3.
+
+Det lykkedes ikke at gøre sekvensrutinen generisk, således at den kan håndtere udruninger af andre ægtyper end hønseæg. Det lykkedes heller ikke at færdiggøre implementeringen af fejlhåndtering, således at brugeren kan se fejlbeskeder. Begge dele pga. mangel på tid.

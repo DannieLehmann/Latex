@@ -1,0 +1,62 @@
+\chapter{Krav}
+
+\section{Generelt}
+Der er i dette projekt oprettet 3 typer af krav. Der er forhåndskrav bestående af krav til brugen af platformtyper samt indhold af sensorer og/eller aktuatorer. Der er Udrugningskrav som består af fundne anbefalinger til et udrugningsforløb. Det endelige valg er taget fra hjemmesiden\footnote{Hønsehuset.dk \cite{Rugetips}}. Den sidste type af krav er personlige krav til systemets funktionalitet, det er her bl.a. kravene til tests af systemet bliver beskrevet. De personlige krav er stærkt fremkomne i de udarbejdede Use Cases, samt i nogle af de ikke funktionelle krav. Der er i rapporten valgt kun at fokusere på Use Casene, og derfor kan de ikke funktionelle krav kun findes i kravspecifikationen i dokumentationsrapporten.
+
+\section{Use Cases}
+Kravene for projektet er formuleret ved brug af Use Cases.\newline De anvendte Use Cases er illustreret på figur \ref{fig:usecase_diagram}. Denne figur viser Use Case diagrammet som blev udviklet under projektforløbet.
+\begin{figure}[h]
+\centering
+\includegraphics[width=16cm, scale=0.8, trim= 0mm 0mm 0mm 200mm, clip=true,  angle=0]{6_krav/diagrammer/UseCase_Generel_v1.pdf}
+\caption{Use Case diagram}
+\label{fig:usecase_diagram}
+\end{figure}
+\newline Det ses at de funktionelle krav er blevet opdelt i 2 Use Cases, Begynd udrugning og Udrug æg.
+
+\textbf{Begynd udrugning:}
+Denne Use Case omhandler setup processen, den er beskrevet ud fra brugerens synspunkt. Den beskriver hvorledes brugeren placerer æg i maskinen, samt den efterfølgende process hvor brugeren vælger æggetypen, og derefter starter udrugningsprocessen svarende til det trufne valg.\newline
+
+\textbf{Udrug æg:}
+Denne Use Case følger direkte efter Use Case 1, og omhandler systemets håndtering af udrugningsprocessen, samt den afsluttende fase når den ordinære process er færdiggjort. Der beskrives reguleringen af varme og fugtighed, samt hvordan der tjekkes for tidspunkter for æggevending og udluftning. I den afsluttende fase skal der stadig reguleres temperatur og luftfugtighed, men der skal ikke vendes æg.
+
+\subsection{Aktører}
+Der er til Use Casene tre vigtige aktører som interagerer med rugemaskinen:
+\begin{itemize}
+	\item \textbf{Bruger} \newline
+	Dette er brugeren som ønsker at udruge æg. Brugeren er hovedsageligt aktiv i den indledende og afsluttende fase af udrugningen hvor der skal ilægges æg og fjernes kyllinger og/eller ikke udrugede æg.
+	\item \textbf{System} \newline
+	Systemet er den automatiserede styring af udrugningsprocessen. Det er systemet, der håndterer reguleringen af miljøet og styringen af aktuatorerne der er tilstede i rugemaskinen, samt grænsefladen til brugeren.
+	\item \textbf{Teknisk ansvarlig} \newline
+	Den tekniske ansvarlige er en person med tilstrækkelig viden om rugemaskinen til at kunne fejlfinde og reparere eventuelle fejl.
+	\end{itemize}
+
+%\chapter{Funktionelle krav}
+
+%\section{Use Case diagram}
+
+%\begin{figure}[h]
+%\centering
+%\includegraphics[width=16cm, scale=1, trim= 0mm 0mm 0mm 200mm, clip=true,  angle=0]{6_krav/diagrammer/UseCase_Generel_v1.pdf}
+%\caption{Use Case diagram}
+\label{fig:usecase_diagram}
+%\end{figure}
+
+%\clearpage
+%\section{Aktørbeskrivelse}
+%\input{6_krav/actor/actor01.tex}
+%\input{6_krav/actor/actor02.tex}
+%\input{6_krav/actor/actor03.tex}
+%\clearpage
+%\section{Use Cases}
+%\input{6_krav/usecase/UseCase01.tex}
+%\input{6_krav/usecase/UseCase02.tex}
+%\clearpage
+%\section{Funktionelle krav}
+%\input{6_krav/funktionelle_krav.tex}
+
+%\section{Ikke-funktionelle krav}
+%\input{6_krav/ikke_funktionelle_krav.tex}
+
+%\clearpage
+%\section{Accepttestspecifikation}
+%\input{6_krav/accepttestspecifikation/accepttestspecifikation.tex}

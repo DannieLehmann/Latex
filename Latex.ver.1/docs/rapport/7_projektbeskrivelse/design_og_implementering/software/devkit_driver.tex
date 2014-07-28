@@ -1,0 +1,84 @@
+\subsection{Devkit driver - Mathias}
+\subsubsection{Design}
+
+Da Devkit8000 er et embedded system, med et Linux baseret OS, skal der for at tilgå fysiske resourcer benyttes et driverlag. 
+
+Driveren der skrives til Devkit8000 har brug for følgende funktionalitet:
+
+\begin{itemize}
+  \item Skal kunne kommunikere over SPI protocol til PSoC3.
+  \item Skal kunne modtage interrupt fra lågen.
+\end{itemize}
+
+Til SPI Driveren er der allerede udarbejdet et skelet i faget I3HAL, hvor der er lavet en driver, som kan kommunikere over SPI\footnote{Redmine Driver \cite{redmine_driver}}. Der tages udgangspunkt i denne, der ønskes dog tilføjet følgende funktionalitet:
+
+\begin{itemize}
+  \item Tilpasning til den tidligere definerede protocol i projektet, se afsnit \ref{psoc_spi}.
+  \item Automatisk oprettelse af node filer ved at tilføje oprettelse af \texttt{driver class} og \texttt{driver device}.
+  \item Tilføjelse af en interrupt line, GPIO samt ISR til interrupt linen. 
+  \item Der skal ændres i read funktionen (funktionen der bruges til at tilgå driveren) så den kan bruges til både SPI og interrupt.
+\end{itemize}
+
+Designmæssigt vælges det at begge funktionaliteter samles i en driver frem for at splitte det op i to forskellige drivere. Dette vælges, da det ikke anses for nødvendigt, at de to drivere skal kunne benyttes uafhængigt af hinanden.
+
+\subsubsection{Implementering}
+
+For at oprette node filerne automatisk, som er applikationers tilgang til driver, tilføjes objekter af typen \texttt{device} og \texttt{class}. Der oprettes en enkelt \texttt{device} class, samt et device for hver fil der skal oprettes. For at tilpasse driveren til den ønskede SPI protocol oprettes tre "read" filer til at hente "Temp", "Humid"  og "Time"  samt en read fil til interrupt linien. Til SPI delen oprettes ligeledes en SPI "write". 
+
+%Følgende kode blev derfor tilføjet til driveren init funktion:
+%\begin{lstlisting}
+%//Declare device and class
+%static struct device* psoc_device[MINOR_NUM];
+%static struct class* psoc_class;
+%
+%//In init function
+%//Create class
+%psoc_class = class_create(THIS_MODULE, "psoc3");
+%
+%//create devices (acces files)
+%for ( i = 0; i < MINOR_NUM-1; i++)
+%		psoc_device[i] = device_create(psoc_class, NULL, MK_DEVNO, 
+%				NULL, "psoc%d", i);
+%interrupt_device = device_create(psoc_class, NULL, MKDEV(MAJOR(devno),4), 
+%				NULL, "psoc_interrupt%d",0); 
+%\end{lstlisting}
+%
+%MK\_DEVNO tildeler filen det rigtige minor number, som senere benyttes til at retunere de rigtige værdier når der læses fra filen.
+
+Ligeledes blev der i \texttt{exit} funktionen tilføjet kode til at rydde op igen.
+
+For at kunne styre hvilke filer, der blev brugt til at tilgå hvad, blev der i \texttt{read} og \texttt{write} funktionerne lavet en "Switch case", som kigger på driverens minor nummer (filen der bliver tilgået).
+%, ex på dette kan ses i koden for read funktionen:
+%
+%\begin{lstlisting}
+%//Read funktion
+%minor = MINOR(filep->f_dentry->d_inode->i_rdev);
+%	switch (minor)
+%	{
+%		case 1:	
+%			if(psoc_spi_read_reg16(0x02,&result) < 0)
+%				return -1; 
+%			break;
+%		case 2:	
+%			if(psoc_spi_read_reg16(0x03,&result) < 0)
+%				return -1; 
+%			break;
+%		case 3:	
+%			if(psoc_spi_read_reg16(0x04,&result) < 0)
+%				return -1; 
+%			break;
+%		case 4:
+%			wait_event_interruptible(interruptlineQ, (flag == 1));
+%			result = gpio_get_value(GPIO_KEY);
+%			flag = 0;
+%			break;en man henvender sig til, giver den data man ønsker. Når man henvender sig til filen som giver minor number 4, ender man i \newline\texttt{wait\_event\_interruptible(interruptlineQ, (flag == 1))}. Funktionen er kombineret med en interrupt service rutine, som sætter \texttt{flag} til at være lig 1, samt sender et \texttt{wake\_interruptible}. Dette sikrer at der kun kan læses data når der bliver registreret en ændring på rising eller falling edge.
+
+Der blev desuden lavet et script, for at insætte driveren, hotplug modulet, samt ændre indstillinger på den allerede eksisterende cpld driver.
+%
+%\begin{lstlisting}
+%insmod psocmod.ko
+%insmod hotplug\_psoc\_spi\_device.ko
+%
+%echo 0x3 > /sys/class/cplddrv/cpld/spi\_route\_reg
+%echo 0x1 > /sys/class/cplddrv/cpld/ext\_serial\_if\_route\_reg
+%\end{lstlisting}

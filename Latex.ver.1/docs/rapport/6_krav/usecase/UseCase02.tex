@@ -1,0 +1,78 @@
+\linespread{1.0}\subsection{Udrug {\ae}g}
+\begin{table}[H]
+\centering
+\begin{tabular}[\textwidth]{|p{0.18\textwidth}|p{0.82\textwidth}|}
+\hline Navn & Udrug æg \\ 
+\hline Usecase ID & \usecaseset{Udrug aeg} \\ 
+\hline Primær aktør & System \\ 
+\hline Interessenter & Sekundær aktør: Bruger \\ 
+\hline Forudsætning & Use Case \usecaseref{Begynd udrugning} \\ 
+\hline Resultat & Æggene er udruget og fjernet fra maskinen \\ 
+\hline Hovedforløb &
+	\begin{enumerate}
+	\item \label{itm:udrugning-step1} Systemet indlæser valgte sekvens.
+	\item \label{itm:udrugning-step2} Systemet regulerer temperatur og luftfugtighed.
+	\item \label{itm:udrugning-step3} Systemet kontrollerer om det er tid til æggevending.  \newline
+	\textbf{hvis} (tid = æggevending): Vend æg.
+	\newline
+	\textbf{ellers}: Vend ikke æg.
+	\newline
+	Step \ref{itm:udrugning-step2}-\ref{itm:udrugning-step3} gentages indtil udrugningstiden er afsluttet.
+	\item \label{itm:udrugning-step4} 	System informerer brugeren om at udrugningssekvens er færdig.
+	\item \label{itm:udrugning-step5} 	Bruger åbner låge.
+	\item \label{itm:udrugning-step6} 	Systemet registrerer åbning af låge.
+	\item \label{itm:udrugning-step7} 	Systemet afbryder regulering af temperatur og luftfugtighed.
+	\item \label{itm:udrugning-step8} 	Bruger fjerner emne(r).
+	\item \label{itm:udrugning-step9} 	Bruger lukker låge.
+	\item \label{itm:udrugning-step10} 	Systemet registrerer lukning af låge.
+	\item \label{itm:udrugning-step11} 	Systemet genoptager regulering af temperatur og luftfugtighed.
+	\newline Step \ref{itm:udrugning-step5}-\ref{itm:udrugning-step11} gentages indtil brugeren indikerer overfor systemet at alle emner er fjernet.
+	\item \label{itm:udrugning-step12}		Systemet stopper med regulering af temperatur og luftfugtighed.	
+	\end{enumerate} \\
+\hline Undtagelser &
+
+
+\begin{enumerate}
+		\item[*] Bruger afbryder udrugningen.
+		\begin{itemize}
+			\item Systemet afbryder Use Case \usecaseref{Udrug aeg}
+		\end{itemize}
+	\end{enumerate}
+
+	\begin{enumerate}
+		\item[*](\ref{itm:udrugning-step2}-\ref{itm:udrugning-step3}) Bruger åbner maskinen.
+		\begin{itemize}
+			\item Systemet afbryder trin 2-3.
+			\begin{itemize}
+				\item Bruger lukker maskinen.
+				\item Systemet fortsætter med trin 2-3.
+			\end{itemize}
+		\end{itemize}
+	\end{enumerate}
+
+	\begin{enumerate}
+	\item[\ref{itm:udrugning-step2}a.] Systemet kan ikke regulere temperatur eller luftfugtighed.
+	\begin{itemize}
+	\item Systemet registrerer fejl.
+	\item Systemet informerer bruger om fejl.
+	\end{itemize}
+	\end{enumerate} 
+	
+	
+	\begin{enumerate}
+	\item[\ref{itm:udrugning-step6}a.]  System registrerer ikke åbning af maskine.
+	\begin{itemize}
+	\item Bruger kontakter tekniske ansvarlig.
+	\end{itemize}
+	\end{enumerate}  
+	
+	\begin{enumerate}
+	\item[\ref{itm:udrugning-step10}a.]  System registrerer ikke lukning af maskine.
+	\begin{itemize}
+	\item Bruger kontakter tekniske ansvarlig.
+	\end{itemize}
+	\end{enumerate} \\ \hline 
+\end{tabular}
+\caption{Use Case - Udrug æg}
+\label{tab:usecase-Udrug-aeg}
+\end{table}

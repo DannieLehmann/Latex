@@ -1,0 +1,61 @@
+% ¤¤ Oversaettelse og tegnsaetning ¤¤ %
+\usepackage[utf8]{inputenc}					% Input-indkodning af tegnsaet (UTF8)
+\usepackage[danish]{babel}					% Dokumentets sprog
+\usepackage[T1]{fontenc}					% Output-indkodning af tegnsaet (T1)
+\usepackage{ragged2e,anyfontsize}			% Justering af elementer
+%\usepackage{fixltx2e}						% Retter forskellige fejl i LaTeX-kernen
+
+\usepackage{lmodern}
+
+\usepackage{datetime} % Nuværende tidspunkt
+
+% ¤¤ Figurer og tabeller (floats) ¤¤ %
+\usepackage{graphicx} 						% Haandtering af eksterne billeder (JPG, PNG, EPS, PDF)s
+%\usepackage{eso-pic}						% Tilfoej billedekommandoer paa hver side
+\usepackage{wrapfig}						% Indsaettelse af figurer omsvoebt af tekst. \begin{wrapfigure}{Placering}{Stoerrelse}
+%\usepackage{subcaption}					% Included i memoir class
+
+\usepackage{multirow}                		% Fletning af raekker og kolonner (\multicolumn og \multirow)
+\usepackage{multicol}         	        	% Muliggoer output i spalter
+\usepackage{rotating}						% Rotation af tekst med \begin{sideways}...\end{sideways}
+\usepackage{colortbl} 						% Farver i tabeller (fx \columncolor og \rowcolor)
+\usepackage{xcolor}							% Definer farver med \definecolor. Se mere: http://en.wikibooks.org/wiki/LaTeX/Colors
+\usepackage{flafter}						% Soerger for at floats ikke optraeder i teksten foer deres reference
+\let\newfloat\relax 						% Justering mellem float-pakken og memoir
+\usepackage{float}							% Muliggoer eksakt placering af floats, f.eks. \begin{figure}[H]
+\usepackage{longtable} %Long tables
+
+\usepackage{afterpage} %Bruges til at få billeder og figurer til at være samen med kapitlet de hører til
+\usepackage{placeins}
+
+% ¤¤ Matematik mm. ¤¤
+\usepackage{amsmath,amssymb,stmaryrd} 		% Avancerede matematik-udvidelser
+\usepackage{mathtools}						% Andre matematik- og tegnudvidelser
+\usepackage{textcomp}                 		% Symbol-udvidelser (f.eks. promille-tegn med \textperthousand )
+\usepackage{rsphrase}						% Kemi-pakke til RS-saetninger, f.eks. \rsphrase{R1}
+\usepackage[version=3]{mhchem} 				% Kemi-pakke til flot og let notation af formler, f.eks. \ce{Fe2O3}
+\usepackage{siunitx}						% Flot og konsistent praesentation af tal og enheder med \si{enhed} og \SI{tal}{enhed}
+\sisetup{locale=DE}							% Opsaetning af \SI (DE for komma som decimalseparator) 
+
+% ¤¤ Referencer og kilder ¤¤ %
+\usepackage[danish]{varioref}				% Muliggoer bl.a. krydshenvisninger med sidetal (\vref)
+%\usepackage{natbib}							% Udvidelse med naturvidenskabelige citationsmodeller
+%\usepackage{xr}							% Referencer til eksternt dokument med \externaldocument{<NAVN>}
+%\usepackage{glossaries}					% Terminologi- eller symbolliste (se mere i Daleifs Latex-bog)
+
+% ¤¤ Misc. ¤¤ %
+\usepackage{lipsum}							% Dummy text \lipsum[..]
+\usepackage[shortlabels]{enumitem}			% Muliggoer enkelt konfiguration af lister
+\usepackage{pdfpages}						% Goer det muligt at inkludere pdf-dokumenter med kommandoen \includepdf[pages={x-y}]{fil.pdf}
+
+%EMF to PDF conversion
+\usepackage{epstopdf}
+
+% Kommentarer og rettelser med \fxnote. Med 'final' i stedet for 'draft' udloeser hver note en error i den faerdige rapport.
+\usepackage[footnote,danish,final,nomargin]{fixme}
+
+% Microtype gør at teksten ser pænere ud.
+\usepackage{microtype}
+
+\usepackage{listings}
+\usepackage{titlesec}

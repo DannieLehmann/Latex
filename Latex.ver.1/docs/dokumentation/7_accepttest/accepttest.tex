@@ -1,0 +1,106 @@
+\chapter{Accepttest}
+Da vi ikke formåede at sammensætte og teste systemet i dets helhed, kan vi ikke godkende nedenstående accepttests. Vi har dog gennemført og godkendt flere af testene i et "subset" af systemet, som inkluderede sammensatte moduler.
+
+\section{Accepttest for Use Case \usecaseref{Begynd udrugning}} 
+
+%************************ Use Case 1 **************************************
+ 
+ \subsection{Hovedscenarie}
+\begin{center}
+
+	\begin{tabular}{| p{3cm} | p{3cm} | p{3cm} | p{3cm} |}
+		\hline
+		Krav & Udførelse & Forventet resultat & Resultat \\ \hline
+		% % % % % % % % % % % % % % % % % % % % % % % % % % % % 
+		
+		\multirow{2}{3cm}{Ved lågens åbning låses UI. Det forbliver låst indtil lågen lukkes.} 
+		& Maskinen står i idle tilstand og lågen åbnes
+		& UI låser
+		& \\ \cline{2-4}
+		
+		&Lågen lukkes igen
+		
+		&UI låser op
+		& \\ \hline 
+		
+
+	\end{tabular}
+\end{center}
+
+%\subsubsection{Undtagelser}
+%\begin{center} 
+%	\begin{tabular}{| p{3cm} | p{3cm} | p{3cm} | p{3cm} |}
+%	\end{tabular}
+%\end{center}
+
+\section{Accepttest for Use Case \usecaseref{Udrug aeg}} 
+
+%************************ Use Case 2 **************************************
+ 
+ \subsection{Hovedscenarie}
+\begin{center}
+
+	\begin{longtable}{| p{3cm} | p{3cm} | p{3cm} | p{3cm} |}
+		\hline
+		Krav & Udførelse & Forventet resultat & Resultat \\ \hline
+		% % % % % % % % % % % % % % % % % % % % % % % % % % % % 
+		
+		
+		Systemet skal kunne regulere og holde en temperatur indenfor grænserne angivet i ikke funktionelle krav.
+		&Systemet opstilles i omgivelser der ligger indenfor de påkrævede rammer. Systemet indstilles til at skulle holde 37$^\circ$C. Systemet sættes i gang og temperaturen aflæses efter 10 minutter. 
+		&Maskinen kan regulere og holde temperaturen indenfor de angivne rammer. 
+		& \\ \hline
+		
+		Systemet skal kunne regulere og holde en luftfugtighed indenfor grænserne angivet i ikke funktionelle krav.
+		&Systemet opstilles i omgivelser der ligger indenfor de påkrævede rammer. Systemet indstilles til at skulle holde 70\% relativ luftfugtighed. Systemet sættes i gang og luftfugtigheden aflæses efter 10 minutter.
+		&Maskinen kan regulere og holde luftfugtigheden indenfor de angivne rammer.
+		& \\ \hline
+		
+		Maskinen kan vende æg med et bestemt interval. Æggene roteres indenfor de i ikke funktionelle krav specificerede grænser.
+		&Æg-type specificeres, og systemet indstilles til at skulle vende æggene hvert 5. minut i en periode på 30 minutter. Æggenes vertikale akse markeres med en pil, der peger op. Systemet sættes i gang og kører i 30 minutter. Ved hver vending måles rotation af hvert æg, og deres rotation noteres. Efter hver rotation vendes hvert æg manuelt så orienteringsindikatoren (pilen) peger opad. 
+		&Maskinen roterer alle æg indenfor den angivne grænse.
+		& \\ \hline		
+		
+		Systemet skal ved afsluttet udrugning informere brugeren om dette.
+		&Maskine indstilles til et 5 minutters udrugningsprogram og igangsættes. Det observeres at systemet informerer brugeren når sekvensen afsluttes.
+		&Maskinen vil ved testsekvensens afslutning informere brugeren.
+		& \\ \hline
+
+		
+		
+	\end{longtable}
+\end{center}
+\subsection{Undtagelser}
+\begin{center}
+
+	\begin{longtable}{| p{3cm} | p{3cm} | p{3cm} | p{3cm} |}
+	\hline
+			Krav & Handling & Forventet resultat & Resultat \\ \hline
+			% % % % % % % % % % % % % % % % % % % % % % % % % % % % 
+			
+			\multirow{2}{\linewidth}{Ved lågens åbning låses UI og udrugningssekvensens afbrydes midlertidigt. UI forbliver låst indtil lågen lukkes. Når lågen lukkes genoptages udrugnings- sekvensen.} 
+			& Maskinen står I udrug-tilstand og lågen åbnes. \newline
+			& UI låser og udrugningssekvensen stoppes.
+			& \vspace{2.5cm} \\ \cline{2-4}
+			
+			&Lågen lukkes igen.
+			
+			&UI låser op og udrygningssekvensen genoptages.
+			& \vspace{2.5cm} \\ \hline 
+			
+			Hvis det ikke er muligt at overholde temperaturen skal systemet informere brugeren.
+			&Maskine opstilles i et lokale med temperatur indenfor de angivne grænser for opstilningsmiljø. Systemet indstilles til at skulle holde temperaturen på 40$^\circ$C, varmelegemet frakobles, og systemet aktiveres. \newline
+			&Maskinen informerer brugeren. 
+			& \\ \hline
+			
+			Hvis det ikke er muligt at overholde luftfugtigheden skal systemet informere brugeren.
+			
+			&Maskine opstilles i et lokale med luftfugtighed indenfor de angivne grænser for opstilningsmiljø. Systemet indstilles til at skulle holde luftfugtigheden på 70\% relativ luftfugtighed, luftfugtighedsreguleringsmekanismen  frakobles, og systemet aktiveres.
+			
+			&Maskinen informerer brugeren.
+			
+			& \\ \hline
+					
+			
+		\end{longtable}
+	\end{center}
